@@ -96,8 +96,47 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # [15, 41, 49, 58, 26, 4, 28, 8, 61]
+        for i in range(0, len(self._list) - 1):
+            for j in range(0, len(self._list) - 1 - i):
+                # Make sure robot is at j position at the start of loop.
+                if self._position != j:
+                    if self._position > j:
+                        # Move back to the left until we hit J.
+                        while (self._position != j):
+                            if self.can_move_left():
+                                self.move_left()
+                            else: break
+                    if self._position < j:
+                        # Move back to the right until we hit J.
+                        while (self._position != j):
+                            if self.can_move_right():
+                                self.move_right()
+                            else: break
+                # Current in hand should be None. Replace element at index J with None, then check on to the right. 
+                # If current is greater than one to right, swap.. or else keep current. then move back and swap with index j again.
+                
+                # ! Check to see if we can move right.
+                if not self.can_move_right():
+                    # We are at the end of the list, nothing to compare to the right. Break and go back to beginning.
+                    break
+
+                self.swap_item()
+                self.move_right();
+                '''
+                    If the held item's value is greater, return 1.
+                    If the held item's value is less, return -1.
+                    If the held item's value is equal, return 0.
+                '''
+                if self.compare_item() == 1:
+                    # Current item is greater than comparison item. Swap them before moving back to the right.
+                    self.swap_item()
+                
+                self.move_left()
+                self.swap_item()
+                
+                    
+
 
 
 if __name__ == "__main__":
