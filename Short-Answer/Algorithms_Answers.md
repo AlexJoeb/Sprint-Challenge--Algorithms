@@ -2,17 +2,21 @@
 
 ## Exercise I
 
-a) I believe the first exercise is O(n^3). The functions appears to scale to the power of 3 based on n; because of the n * n * n.
+a) O(n). Having the while  loop in the function makes it atleast O(n). The part where it says `n * n * n` can be done as a constant time operation and `n` never increased during the loop.
 
-b) O(2^n) - because there is two for loops that depend on the size of n.
+b) O(nlogn). There is two for-loops that depend on the size of n. The first for-loop iterates from 0 to `n`, this makes the function at least O(n). Inside that loop, there is another loop that iterates from `j` to `n` with each pass.
 
 
-c) O(n) - because the single instance of recursion acts as a single for loop.
+c) O(n). This is a simple case of recursion. The single call for recursion acts as a single for loop inside of an iterative function.
 
 ## Exercise II
-define minFloorBeforeBreak, takes `n` as number of stories in building:
-    initalize at 0 and store `current_floor` to keep track of current floor
-    run a loop while current_floor is less than or equal to n:
-        check to see if egg would break
-        if egg breaks, return current_floor as `f`
-        else increment current_floor by one and go to top of loop to check next floor
+* My approach to this would be to use a binary method of finding the correct floor. Using a binary method would help minimize the amount of eggs needed to be dropped.
+* Time complexity is O(logn) because I am using a binary method to speed up the operation significantly.
+* Solution:
+    I would define a function that takes in `f` the amount of floors. I would store the current high (default to `f`) and low (default to 1). Do (high + low) / 2 to find the middle. Check to see if it breaks.
+
+    If it doesn't break, I would move the low pointer to the middle floor and then repeat the process.
+
+    If it does break, I would move the high pointer to middle floor and then repeat the process.
+
+    Rinse and repeat until the lowest floor is found without breaking.  
