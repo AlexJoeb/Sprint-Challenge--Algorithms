@@ -96,8 +96,68 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+
+        """
+            ! UPER !
+
+            -> -- U (Understand) --
+            - The robot will have to have the light turned on while sorting. 
+                - Then I can turn it off when I have completed sorting, breaking out of the while-loop.
+            - The robot is going to have to iterate through each item and compare the values.
+                - I will have to check to make sure the robot can move left/right before making the move.
+                - I can use the robot's helper function that will return:
+                    - -1 (current item is lesser)
+                    - 0 (current item is same)
+                    - 1 (current item is greater).
+                - From the helper function's return value, I can make my determination on whether to swap or not.
+
+            -> -- P (Plan) --
+            - I am going to use a while-loop that cross-checks whether the robots light is on/off and subsequently to keep running.
+                - While running, the robot can preform it's actions (move left/right and compare/swap).
+           
+            -> -- E (Execute) --
+        """
+
+        # -> Turn the light on first to allow the while-loop to run.
+        self.set_light_on()
+
+        # -> Initalize the while loop to run until light is turned off.
+        while self.light_is_on():
+
+            # -> Robot starts with an empty hand, we will just pick up the first item it start on.
+            self.swap_item()
+
+            # -> This is where we can start iterating through the list of items. 
+            # -> We can use the while-loop to make sure that the robot CAN move right before making the move.
+            while self.can_move_right():
+
+                # -> We CAN move right, so do so.
+                self.move_right()
+
+                # -> We've move one to the right and are above a new item. Compare the current item in hand to the item we're standing above.
+                comparison = self.compare_item()
+
+                # -> Check to see if the comparison is 1 (item in hand is greater).
+                if comparison == 1:
+                    # -> Item in hand is greater than the item that we're standing on. Swap them.
+                    self.swap_item()
+            
+            # -> At the beginning when we did the first swap, we swap our None value with the item.
+            # -> So we have to go back to that position by getting the item that is one after it; 
+            # -> and move left one the the correct position.
+            while self.can_move_left() and self.compare_item() !=None:
+                self.move_left()
+
+            #-> Then move swap the item in hand with the None value in place.
+            self.swap_item()
+            # -> Then move right one so when then next iteration goes around, it will start at the next element.
+            self.move_right()
+
+            # -> If the robot can not move right anymore, then shut the light off. Else, continue to next loop iteration.
+            if not self.can_move_right():
+                self.set_light_off()
+            else: continue
+
 
 
 if __name__ == "__main__":
